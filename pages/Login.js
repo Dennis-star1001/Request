@@ -1,20 +1,22 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import { Box, Button, VStack, Flex, Image, FormControl, FormErrorMessage, FormLabel, HStack, Input, Stack, Text, useToast } from "@chakra-ui/react";
+import { Box, Button, VStack, Flex, Image, FormControl, FormErrorMessage, FormLabel, HStack, Input, Stack, Text, useToast, Divider, Container } from "@chakra-ui/react";
 import { FcGoogle } from 'react-icons/fc';
 import { GoogleLogin } from 'react-icons/go';
-import { AiOutlineArrowLeft } from 'react-icons/ai';
+import { AiOutlineArrowLeft, AiOutlineGoogle, AiOutlineTwitter } from 'react-icons/ai';
+import { FaLinkedinIn } from 'react-icons/fa';
 import { useState } from 'react';
 import { useFormik } from 'formik';
 
 import * as Yup from 'yup'
 import Axios from 'axios'
 import { setCookie } from 'nookies'
+import { useRouter } from 'next/router';
 
 export default function Login() {
   const [loading, setLoading] = useState(false)
   const toast = useToast()
-
+  const Router = useRouter()
   const loginFormik = useFormik({
     initialValues: {
       email: '',
@@ -31,7 +33,7 @@ export default function Login() {
         ),
     }),
     onSubmit: async (values) => {
-      await Axios.post('http://localhost:3000/api/user/login', {
+      await Axios.post('http://localhost:3000/api/user/Login', {
         email: values.email,
         password: values.password,
       })
@@ -71,118 +73,144 @@ export default function Login() {
     },
   })
   return (
-    <Box bg='#f7fafc'>
-      <HStack justifyContent='space-between' alignItems='center' h='100vh' >
-        <Stack justifyContent='center' alignItems='center'  w='50vw' bg='#161b45' h='100%'>
-        <Box>
-            <Text textAlign='center' color='white' fontSize='3xl' fontWeight='bold'>Get started for free. <br/>Connect to the world easily and fast.</Text>
+    <Box bg='white' h='100vh' >
+     
+      <Container maxW='6xl'>
+      <Box>
+      <Text
+      py='10' 
+        fontSize='2xl'
+        fontWeight='bold'
+        color='#161b45'
+        fontFamily='Showcard Gothic'>
+      E - quest
+      </Text>
+      </Box>
+      <HStack justifyContent='space-between' alignItems='center'  >
+        
+        {/* <Stack justifyContent='center' alignItems='center' w='50vw' bg='#161b45' h='100%'>
+          <Box>
+            <Text textAlign='center' color='white' fontSize='3xl' fontWeight='bold'>Get started for free. <br />Connect to the world easily and fast.</Text>
           </Box>
           <Box>
-           <Image src='./World.svg' alt='Connected World' w='sm'  h='sm'/>
+            <Image src='./World.svg' alt='Connected World' w='sm' h='sm' />
           </Box>
-          
-        </Stack>
+
+        </Stack> */}
         <Box>
-        {/* <Button leftIcon={<AiOutlineArrowLeft />} colorScheme='teal' variant='#50c1e4'>Back</Button> */}
-        <VStack px='20' w='50vw' >
-          <Text textAlign='left' fontWeight='bold' color='#161b45' fontSize='3xl'>
-           Sign in
-          </Text>
-          {/* <Flex my='5' alignItems='center'>
+          {/* <Button leftIcon={<AiOutlineArrowLeft />} colorScheme='teal' variant='#50c1e4'>Back</Button> */}
+          <Flex flexDirection='column' px='10' w='lg'>
+            <Text textAlign='left' fontWeight='bold' color='#161b45' fontSize='3xl' py='10'>
+              Login
+            </Text>
+            {/* <Flex my='5' alignItems='center'>
             <Divider />
             <Text pr='2' pl='2'>
               Or
             </Text>
             <Divider my='3' />
           </Flex> */}
-          <form onSubmit={loginFormik.handleSubmit}>
-            <FormControl>
-              <Stack spacing='6'>
-                <FormControl
-                  id='email'
-                  isInvalid={
-                    loginFormik.errors.email && loginFormik.touched.email
-                  }>
-                  <FormLabel>Email</FormLabel>
-                  <Input
+            <form onSubmit={loginFormik.handleSubmit}>
+              <FormControl>
+                <Stack spacing='6'>
+                  <FormControl
                     id='email'
-                    borderColor='gray.400'
-                    _focus={{
-                      border: ' 1px solid #161b45',
-                    }}
-                    onChange={loginFormik.handleChange}
-                    value={loginFormik.values.email}
-                  />
-                  <FormErrorMessage>{loginFormik.errors.email}</FormErrorMessage>
-                </FormControl>
-                <FormControl
-                  id='password'
-                  borderColor='gray.400'
-                  isInvalid={
-                    loginFormik.errors.password && loginFormik.touched.password
-                  }>
-                  <FormLabel>Password</FormLabel>
-                  <Input
-                    type='password'
-                    _focus={{
-                      border: ' 1px solid #161b45',
-                    }}
-                    onChange={loginFormik.handleChange}
-                    value={loginFormik.values.password}
-                  />
-                  <Button
-                    colorScheme='blue'
-                    float='right'
-                    d='flex'
-                    variant='link'
-                    onClick={() =>
-                      Router.push('/forget-password', undefined, {
-                        shallow: true,
-                      })
+                    isInvalid={
+                      loginFormik.errors.email && loginFormik.touched.email
                     }>
-                    Forgot your password?
-                  </Button>
-                  <FormErrorMessage>
-                    {loginFormik.errors.password}
-                  </FormErrorMessage>
-                </FormControl>
-
-                <Box>
-                  <Button
-                    fontSize='large'
-                    type='submit'
-                    bg='#161b45'
-                    w='full'
-                    color='white'
-                    isLoading={loading}
-                    _hover={{
-
-                      bg: '#161b45',
-                      color: 'white',
-                      border: '1px solid #161b45'
-                    }}>
-                    Login
-                  </Button>
-                  <Text mt='4' d='flex' alignItems='center'>
-                    Don`t have an acount?
+                    <FormLabel color='gray.500'>Email</FormLabel>
+                    <Input
+                      id='email'
+                      borderColor='gray.400'
+                      _focus={{
+                        border: ' 1px solid #161b45',
+                      }}
+                      onChange={loginFormik.handleChange}
+                      value={loginFormik.values.email}
+                    />
+                    <FormErrorMessage>{loginFormik.errors.email}</FormErrorMessage>
+                  </FormControl>
+                  <FormControl
+                    id='password'
+                    borderColor='gray.400'
+                    isInvalid={
+                      loginFormik.errors.password && loginFormik.touched.password
+                    }>
+                    <FormLabel color='gray.500'>Password</FormLabel>
+                    <Input
+                      type='password'
+                      _focus={{
+                        border: ' 1px solid #161b45',
+                      }}
+                      onChange={loginFormik.handleChange}
+                      value={loginFormik.values.password}
+                    />
                     <Button
                       colorScheme='blue'
+                      float='right'
+                      d='flex'
                       variant='link'
                       onClick={() =>
-                        Router.push('/Signup', undefined, { shallow: true })
-                      }
-                      ml='2'>
-                      Register
+                        Router.push('/forget-password', undefined, {
+                          shallow: true,
+                        })
+                      }>
+                      Forgot your password?
                     </Button>
-                  </Text>
-                </Box>
-              </Stack>
-            </FormControl>
-          </form>
-          </VStack>
-        </Box>
-      </HStack>
+                    <FormErrorMessage>
+                      {loginFormik.errors.password}
+                    </FormErrorMessage>
+                  </FormControl>
 
+                  <Box>
+                    <Button
+                      fontSize='large'
+                      type='submit'
+                      bg='#161b45'
+                      w='28'
+                      onClick={() => Router.push('./Dashboard/dashboard')}
+                      color='white'
+                      isLoading={loading}
+                      _hover={{
+
+                        bg: '#161b45',
+                        color: 'white',
+                        border: '1px solid #161b45'
+                      }}>
+                      Login
+                    </Button>
+                    <Text mt='4' d='flex' alignItems='center'>
+                      Don`t have an acount?
+                      <Button
+                        colorScheme='blue'
+                        variant='link'
+                        onClick={() => Router.push('/Signup')}
+                        ml='2'>
+                        Register
+                      </Button>
+                    </Text>
+                  </Box>
+                </Stack>
+              </FormControl>
+            </form>
+          </Flex>
+        </Box>
+        <HStack spacing='14'  position='fixed' top='80' right='40'>
+          <Divider height='40' orientation='vertical' borderColor='gray.300' />
+
+          <VStack spacing='5'>
+            <Text color='gray.500' fontSize='sm' fontWeight='medium'>Or continue with </Text>
+          <HStack spacing='5'>
+            <Button><FaLinkedinIn size='20' color='#161b45' /></Button>
+            <Button><AiOutlineGoogle  size='20' color='#161b45' /></Button>
+            <Button><AiOutlineTwitter  size='20' color='#161b45' /></Button>
+          </HStack>
+          </VStack>
+
+        </HStack>
+
+      </HStack>
+      </Container>
     </Box>
   )
 }

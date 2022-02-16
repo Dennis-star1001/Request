@@ -19,7 +19,7 @@ export default function Navbar() {
           <Box color='white'>About</Box>
           <Link color='white' href='#pricing'>Pricing</Link>
           <Box color='white'>Contact</Box>
-          {/* <Link onClick={() => Router.push('./Dashboard')}>Dashboard</Link> */}
+          <Link onClick={() => Router.push('./Dashboard/dashboard')}>Dashboard</Link>
           <HStack>
             <Box>
               <Button
@@ -27,11 +27,11 @@ export default function Navbar() {
                 bg='none'
                 fontWeight='normal'
                 color='white'
-                _hover={{
-                  bg: 'white',
-                  color: '#161b45',
-                  border: 'none'
-                }}
+                  _hover={{
+                    bg: 'white',
+                    color: '#161b45',
+                    border: 'none'
+                  }}
               >
                 Sign in
               </Button>
@@ -41,7 +41,7 @@ export default function Navbar() {
             </Center>
             <Box>
               <Button
-                onClick={() => Router.push('/')}
+                onClick={() => Router.push('/Signup')}
                 bg='none'
                 fontWeight='normal'
                 color='white'
